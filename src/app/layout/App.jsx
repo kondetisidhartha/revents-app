@@ -12,7 +12,7 @@ class App extends Component {
         </button>
 
         {/* Button from React component */}
-        <Button
+        
       </div>
     );
   }
