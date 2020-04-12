@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Grid, Button } from 'semantic-ui-react';
 import EventList from '../EventList/EventList';
 import EventForm from '../EventForm/EventForm';
+import cuid from 'cuid';
 
 const eventsFromDashboard = [
   {
@@ -60,6 +61,15 @@ class EventDashboard extends Component {
     isOpen: false,
   };
 
+  createEventHandler = (newEvent) => {
+    newEvent.id = cuid();
+    newEvent.hostPhotoURL = './assets/images/user.png';
+    this.setState(({ events }) => ({
+      events: [...events, newEvent],
+      isOpen: false,
+    }));
+  };
+
   changeFormBoolean = () => {
     // const newStatus = !this.state.isOpen;
     this.setState(({ isOpen }) => ({
@@ -80,7 +90,12 @@ class EventDashboard extends Component {
               onClick={this.changeFormBoolean}
               content='Create Event'
             />
-            {isOpen && <EventForm cancelFormHandler={this.changeFormBoolean} />}
+            {isOpen && (
+              <EventForm
+                createEvent={this.createEventHandler}
+                cancelFormHandler={this.changeFormBoolean}
+              />
+            )}
           </Grid.Column>
         </Grid>
       </div>
